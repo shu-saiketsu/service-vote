@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Saiketsu.Service.Vote.Application;
 
-namespace Saiketsu.Service.Vote.Application
+public interface IApplicationMarker
 {
-    public interface IApplicationMarker
-    {
-    }
 }

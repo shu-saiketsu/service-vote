@@ -20,6 +20,63 @@ namespace Saiketsu.Service.Vote.Infrastructure.Persistence.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("Saiketsu.Service.Vote.Domain.Entities.CandidateEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.HasKey("Id")
+                        .HasName("pk_candidate");
+
+                    b.ToTable("candidate", (string)null);
+                });
+
+            modelBuilder.Entity("Saiketsu.Service.Vote.Domain.Entities.ElectionEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.HasKey("Id")
+                        .HasName("pk_entity");
+
+                    b.ToTable("entity", (string)null);
+                });
+
+            modelBuilder.Entity("Saiketsu.Service.Vote.Domain.Entities.UserEntity", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text")
+                        .HasColumnName("id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_user");
+
+                    b.ToTable("user", (string)null);
+                });
+
+            modelBuilder.Entity("Saiketsu.Service.Vote.Domain.Entities.VoteEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.HasKey("Id")
+                        .HasName("pk_vote");
+
+                    b.ToTable("vote", (string)null);
+                });
 #pragma warning restore 612, 618
         }
     }

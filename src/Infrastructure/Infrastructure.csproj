@@ -10,16 +10,13 @@
 
 	<ItemGroup>
 	  <PackageReference Include="EFCore.NamingConventions" Version="7.0.2" />
+	  <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 	  <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.3" />
+	  <PackageReference Include="RabbitMQ.Client" Version="6.5.0" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\Application\Application.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Persistence\Configurations\" />
-	  <Folder Include="Persistence\Migrations\" />
 	</ItemGroup>
 
 </Project>

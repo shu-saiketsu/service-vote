@@ -1,11 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Saiketsu.Service.Vote.WebApi.Controllers
+namespace Saiketsu.Service.Vote.WebApi.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public sealed class VotesController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public sealed class VotesController : ControllerBase
-    {
-    }
 }

@@ -1,27 +1,25 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Reflection;
+using Microsoft.EntityFrameworkCore;
 using Saiketsu.Service.Vote.Application.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+using Saiketsu.Service.Vote.Domain.Entities;
 
-namespace Saiketsu.Service.Vote.Infrastructure.Persistence
+namespace Saiketsu.Service.Vote.Infrastructure.Persistence;
+
+public sealed class ApplicationDbContext : DbContext, IApplicationDbContext
 {
-    public sealed class ApplicationDbContext : DbContext, IApplicationDbContext
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        : base(options)
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
-        {
+    }
 
-        }
+    public DbSet<CandidateEntity> Candidates { get; set; } = null!;
+    public DbSet<ElectionEntity> Elections { get; set; } = null!;
+    public DbSet<UserEntity> Users { get; set; } = null!;
 
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
-            base.OnModelCreating(builder);
-        }
+        base.OnModelCreating(builder);
     }
 }
