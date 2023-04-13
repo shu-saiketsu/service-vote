@@ -2,8 +2,6 @@
 
 public sealed class VoteEntity
 {
-    public int Id { get; set; }
-
     public int ElectionId { get; set; }
     public ElectionEntity Election { get; set; } = null!;
 

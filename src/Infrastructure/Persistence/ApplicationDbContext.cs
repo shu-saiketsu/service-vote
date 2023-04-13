@@ -15,6 +15,7 @@ public sealed class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<CandidateEntity> Candidates { get; set; } = null!;
     public DbSet<ElectionEntity> Elections { get; set; } = null!;
     public DbSet<UserEntity> Users { get; set; } = null!;
+    public DbSet<VoteEntity> Votes { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

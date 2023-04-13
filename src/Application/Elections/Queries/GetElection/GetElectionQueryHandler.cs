@@ -1,12 +1,28 @@
-﻿using MediatR;
+﻿using FluentValidation;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Saiketsu.Service.Vote.Application.Common;
 using Saiketsu.Service.Vote.Domain.Entities;
 
 namespace Saiketsu.Service.Vote.Application.Elections.Queries.GetElection;
 
 public sealed class GetElectionQueryHandler : IRequestHandler<GetElectionQuery, ElectionEntity?>
 {
-    public Task<ElectionEntity?> Handle(GetElectionQuery request, CancellationToken cancellationToken)
+    private readonly IApplicationDbContext _context;
+    private readonly IValidator<GetElectionQuery> _validator;
+
+    public GetElectionQueryHandler(IApplicationDbContext context, IValidator<GetElectionQuery> validator)
     {
-        throw new NotImplementedException();
+        _context = context;
+        _validator = validator;
+    }
+
+    public async Task<ElectionEntity?> Handle(GetElectionQuery request, CancellationToken cancellationToken)
+    {
+        await _validator.ValidateAndThrowAsync(request, cancellationToken);
+
+        var election = await _context.Elections.SingleOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
+
+        return election;
     }
 }

@@ -11,7 +11,7 @@ using Saiketsu.Service.Vote.Infrastructure.Persistence;
 namespace Saiketsu.Service.Vote.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230411132416_SampleMigration")]
+    [Migration("20230412162239_SampleMigration")]
     partial class SampleMigration
     {
         /// <inheritdoc />
@@ -49,9 +49,9 @@ namespace Saiketsu.Service.Vote.Infrastructure.Persistence.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.HasKey("Id")
-                        .HasName("pk_entity");
+                        .HasName("pk_election");
 
-                    b.ToTable("entity", (string)null);
+                    b.ToTable("election", (string)null);
                 });
 
             modelBuilder.Entity("Saiketsu.Service.Vote.Domain.Entities.UserEntity", b =>
@@ -68,17 +68,58 @@ namespace Saiketsu.Service.Vote.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Saiketsu.Service.Vote.Domain.Entities.VoteEntity", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<string>("UserId")
+                        .HasColumnType("text")
+                        .HasColumnName("user_id");
+
+                    b.Property<int>("ElectionId")
                         .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnName("election_id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    b.Property<int>("CandidateId")
+                        .HasColumnType("integer")
+                        .HasColumnName("candidate_id");
 
-                    b.HasKey("Id")
+                    b.HasKey("UserId", "ElectionId")
                         .HasName("pk_vote");
 
+                    b.HasIndex("CandidateId")
+                        .HasDatabaseName("ix_vote_candidate_id");
+
+                    b.HasIndex("ElectionId")
+                        .HasDatabaseName("ix_vote_election_id");
+
                     b.ToTable("vote", (string)null);
+                });
+
+            modelBuilder.Entity("Saiketsu.Service.Vote.Domain.Entities.VoteEntity", b =>
+                {
+                    b.HasOne("Saiketsu.Service.Vote.Domain.Entities.CandidateEntity", "Candidate")
+                        .WithMany()
+                        .HasForeignKey("CandidateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_vote_candidate_candidate_id");
+
+                    b.HasOne("Saiketsu.Service.Vote.Domain.Entities.ElectionEntity", "Election")
+                        .WithMany()
+                        .HasForeignKey("ElectionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_vote_election_election_id");
+
+                    b.HasOne("Saiketsu.Service.Vote.Domain.Entities.UserEntity", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_vote_user_user_id");
+
+                    b.Navigation("Candidate");
+
+                    b.Navigation("Election");
+
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

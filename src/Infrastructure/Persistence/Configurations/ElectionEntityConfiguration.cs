@@ -8,7 +8,7 @@ public sealed class ElectionEntityConfiguration : IEntityTypeConfiguration<Elect
 {
     public void Configure(EntityTypeBuilder<ElectionEntity> builder)
     {
-        builder.ToTable("entity");
+        builder.ToTable("election");
 
         builder.HasKey(x => x.Id);
     }

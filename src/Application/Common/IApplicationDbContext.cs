@@ -9,6 +9,7 @@ public interface IApplicationDbContext
     DbSet<CandidateEntity> Candidates { get; }
     DbSet<ElectionEntity> Elections { get; }
     DbSet<UserEntity> Users { get; }
+    DbSet<VoteEntity> Votes { get; }
     EntityEntry Entry(object entity);
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }
